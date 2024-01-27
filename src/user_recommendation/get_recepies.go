@@ -9,8 +9,7 @@ import (
 )
 
 // recomm
-
-func GetRecommendations() (RecipeModel, error) {
+func GetAllRecipies() (RecipeModel, error) {
 	var recipes RecipeModel
 	baseUrl := os.Getenv("baseUrl")
 	response, responseErr := http.Get(baseUrl + "alldata")
@@ -18,6 +17,7 @@ func GetRecommendations() (RecipeModel, error) {
 	// handling error
 	if responseErr != nil {
 		log.Fatal(responseErr)
+		return nil, responseErr
 	}
 
 	defer response.Body.Close()
