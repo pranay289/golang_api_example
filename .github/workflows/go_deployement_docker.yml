@@ -28,9 +28,13 @@ jobs:
       with:
         dockerfile: Dockerfile
         context: .
-
+   
+    
+    - name: Echo a variable
+      run: echo "###### secrates ${{secrets.BASE_URL}}" 
 
     - name: Build Docker image
+    
       run: docker build --build-arg "BASE_URL=${{ secrets.BASE_URL }}" -t golang_docker .
 
     
