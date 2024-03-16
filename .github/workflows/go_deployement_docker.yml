@@ -17,11 +17,6 @@ jobs:
 
     steps:
 
-
-    - name: Uncover secret
-      run: echo -n "${{ secrets.BASE_URL }}" >> foo && cut -c1-100 foo && cut -c4
-
-
     - uses: actions/checkout@v3
 
     - name: Set up Go
@@ -41,7 +36,8 @@ jobs:
 
     - name: Build Docker image
     
-      run: docker build --build-arg "BASE_URL=${{ secrets.BASE_URL }}" -t golang_docker .
+      run: docker build --build-arg "BASE_URL=${{ secrets.BASE_URL }}" \ 
+        --build-arg "PORT=${{secrets.PORT}}" -t golang_docker .
 
     
     - name: Run Docker container
