@@ -36,9 +36,7 @@ jobs:
 
     - name: Build Docker image
     
-      run: docker build -t golang_docker .\
-        --build-arg "BASE_URL=${{ secrets.BASE_URL }}" \ 
-        --build-arg "PORT=${{secrets.PORT}}"
+      run: docker build --build-arg "BASE_URL=${{ secrets.BASE_URL }}" --build-arg "PORT=${{secrets.PORT}}" -t golang_docker .
 
     
     - name: Run Docker container
