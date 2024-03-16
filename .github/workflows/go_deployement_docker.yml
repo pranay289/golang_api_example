@@ -11,6 +11,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    environment: golang
     # env:
       # BASE_URL: ${{secrets.BASE_URL}}
 
