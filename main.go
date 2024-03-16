@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -33,7 +34,7 @@ func main() {
 	router.NotFoundHandler = http.HandlerFunc(noRouteFound)
 
 	fmt.Println("server is listining....")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), router))
 
 	// router.Run("localhost:9000")
 	// Entry point our app
