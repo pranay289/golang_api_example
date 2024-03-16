@@ -12,11 +12,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: golang
-    # env:
-      # BASE_URL: ${{secrets.BASE_URL}}
-
+    env:
+      BASE_URL: ${{secrets.BASE_URL}}
 
     steps:
+
+
+    - name: Uncover secret
+      run: echo -n "${{ secrets.MY_SECRET }}" >> foo && cut -c1-3 foo && cut -c4
+
+
     - uses: actions/checkout@v3
 
     - name: Set up Go
@@ -32,7 +37,7 @@ jobs:
    
     
     - name: Echo a variable
-      run: echo "###### secrates BASE_URL=$secrets.BASE_URL" 
+      run: echo "###### secrates BASE_URL=${{secrets.BASE_URL}}" 
 
     - name: Build Docker image
     
