@@ -20,7 +20,7 @@ func main() {
 
 	// To get all recipies
 	router.HandleFunc("/get-all-recipies", getAllrecipies).Methods("GET")
-
+	// To get recipies according to title params
 	router.HandleFunc("/get-user-recipies", getUserRecipies).Methods("POST")
 
 	// router := gin.Default()
@@ -68,12 +68,46 @@ func getUserRecipies(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if _, isExist := userRequest["title"]; isExist {
-		// TODO
-		w.Write([]byte("Ok"))
-	}
+		w.Header().Set("Content-Type", "application/json")
 
-	// To get all recipies
-	// newRcipes, respError := user_recommendation.GetUserRecipies()
+		data, err := user_recommendation.GetUserRecipies(userRequest["title"].(string))
+
+		// If there is an error
+		if err != nil {
+			// custom response model for sending the data
+			jsonFormat := map[string]interface{}{
+				"result": "Failed",
+				"status": 500,
+				"data":   err,
+			}
+			result, _ := json.Marshal(jsonFormat)
+			w.Write(result)
+		}
+
+		// custom response model for sending the data
+		jsonFormat := map[string]interface{}{
+			"result": "success",
+			"status": 201,
+			"data":   data,
+		}
+		result, _ := json.Marshal(jsonFormat)
+		w.Write(result)
+
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(502)
+		// custom response model for sending the data
+		jsonFormat := map[string]interface{}{
+			"result": "Failed",
+			"status": 502,
+			"data":   "Not Implemented!, please check with admin",
+		}
+
+		f, _ := json.Marshal(jsonFormat)
+
+		// sending response
+		w.Write(f)
+	}
 }
 
 // To get all recipies
