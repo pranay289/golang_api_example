@@ -32,7 +32,7 @@ jobs:
    
     
     - name: Echo a variable
-      run: echo "###### secrates ${{secrets.BASE_URL}}" 
+      run: echo "###### secrates BASE_URL=$secrets.BASE_URL" 
 
     - name: Build Docker image
     
